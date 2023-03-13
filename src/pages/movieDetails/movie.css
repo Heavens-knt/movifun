@@ -1,0 +1,330 @@
+/*       
+*       SHARED STYLES
+*    MOVIE-DETAILS, TV*-DETAILS,  SEASON-DETAILS*/
+
+.media {
+  width: 100vw;
+  max-height: calc(100vh - (var(--header-height)));
+  background-image: url("../../assets/backdrop.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  overflow-y: scroll;
+  isolation: isolate;
+  position: absolute;
+  color: white;
+  top: var(--header-height);
+  padding: 0 1rem; 
+}
+
+.media__header {
+  width: 100%;
+  height: auto;
+}
+
+.media::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100vh);
+  background-color: rgba(10, 10, 30, .4);
+  position: fixed;
+  overflow-y: scroll;
+  z-index: -1;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.image__container, .media__skeleton {
+  width: 100%;
+  height: 70vh;
+  margin: 2rem auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  position: relative;
+}
+
+.movie__poster {
+  border-radius: 20px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.watch-trailer, .skeleton-watch {
+  padding: .5rem 1.5rem;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--sec-color);
+  border: 2px solid var(--sec-color);
+  border-radius: 20px;
+  position: absolute;
+  background-color: var(--background-color);
+}
+
+.skeleton-watch {
+  width: 40%;
+  height: 50px;
+}
+
+.header__title {
+  width: 100%;
+  height: auto;
+}
+
+.media__title {
+  font-size: 26px;
+}
+
+.media__genre {
+  width: max-content;
+  max-width: 100%;
+  height: auto;
+  padding: 0;
+  display: flex;
+  margin-block: 1rem;
+}
+
+.media__genre span {
+  margin-right: .5rem;
+  font-size: 13px;
+  font-weight: 500;
+  padding: .2rem .5rem;
+  border-radius: 10px;
+  color: #112;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--sec-color);
+}
+
+.media__details {
+  width: auto;
+  height: auto;
+  margin: 4rem auto;
+}
+
+.media__details > div {
+  width: 90%;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #aaa;
+}
+
+.media__details h2 {
+  margin-bottom: .5rem;
+}
+
+.media__overview {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 26px;
+  margin-bottom: 1rem;
+}
+
+.media__status {
+  height: auto;
+  margin: 2rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.media__writer, .media__director {
+  width: auto;
+  height: auto;
+  margin: 1rem 0;
+  display: flex;
+  gap: 1rem;
+}
+
+.media__director p:first-child, .media__writer p:first-child {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.media__writer div, .media__director p:last-child {
+  font-weight: 500;
+  color: #ccc;
+}
+
+.media__cast {
+  width: auto;
+  height: auto;
+  margin-block: 1rem;
+}
+
+.media__cast h1 {
+  font-size: 25px;
+  margin-bottom: 2rem;
+}
+
+/* OFFICIAL STYLE  */
+.official__videos {
+  width: 100%;
+  height: auto;
+  margin-block: 2rem;
+  padding-block: 1rem;
+}
+
+.official__videos h1 {
+  font-size: 25px;
+  margin-block: .5rem;
+  text-transform: capitalize;
+}
+
+.official__image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 20px;
+  position: relative;
+  margin: .5rem 0;
+  max-width: 220px;
+}
+
+.official__image img {
+  object-fit: cover;
+  object-position: center;
+  border-radius: 20px;
+}
+
+.official__player {
+  position: absolute;
+  font-size: 25px;
+  padding: .25rem 1.5rem;
+  font-weight: 500;
+  color: var(--sec-color);
+  border-radius: 10px;
+  border: 2px solid var(--sec-color);
+  background-color: rgba(10, 10, 30, .5);
+}
+
+.official__title {
+  font-size: 18px;
+  margin-bottom: .5rem;
+  max-width: 200px;
+}
+
+.media__images {
+  padding-block: 1rem;
+  margin-block: 1rem;
+}
+
+.media__images h1 {
+  font-size: 25px;
+  margin-block: 1rem;
+}
+
+.images__carrousel img {
+  border-radius: 10px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.similar, .recommended {
+  width: 100%;
+}
+
+/*Tv SHIW STYLE FOR THE SEASONS*/
+
+.seasons__total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.seasons__total > section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.seasons__total > section p {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.seasons__total > section span {
+  font-size: 18px;
+  color: #aaa;
+  font-weight: bolder;
+}
+
+.tv__seasons {
+  width: 100%;
+  height: auto;
+  margin: 1rem 0;
+  position: relative;
+}
+
+.seasons__title {
+  font-size: 25px;
+  margin: 1rem 0;
+}
+
+.seasons__carrousel {
+  width: 100%;
+  margin: .5rem 0;
+}
+
+.season__slide {
+  display: inline-block;
+  width: auto;
+  height: auto;
+  margin-block: 1rem;
+}
+
+.season__title {
+  width: max-content;
+  max-width: 180px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: .4rem;
+}
+
+.season__title p {
+  font-size: 22px;
+  color: white;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+}
+
+.season__btn {
+  background-color: #112;
+  display: inline-block;
+  padding: .4rem 1rem;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 20px;
+  color: var(--sec-color);
+  border: none;
+}
+
+.season__image {
+  object-fit: cover;
+  object-position: center;
+  margin-block: .5rem;
+  border-radius:10px ;
+}
+
+/*End Season styling*/
+
+.episode__total > section {
+  flex-direction: row;
+}
+
+.episode__total > section p {
+  margin-right: 1rem;
+}
+
+

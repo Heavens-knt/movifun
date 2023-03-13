@@ -1,0 +1,110 @@
+.Home {
+  width: 100vw;
+  height: 100vh;
+}
+
+.home__media {
+  width: 100%;
+  height: auto;
+  padding-top: 1rem;
+  margin-block: 2rem;
+  background-color: #111;
+}
+
+.home__media__top {
+  width: 92%;
+  margin: .5rem auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.home__media__top .btn {
+  background-color: #112;
+  color: var(--sec-color);
+  transition: all 1s ease;
+}
+
+.home__media__top .active__tab {
+  border: none;
+  outline: none;
+  color: #112;
+  background-color: var(--sec-color);
+}
+
+
+.Home .hero__skeleton {
+  width: 100%;
+  height: calc(100vh - 80px);
+  top: 80px;
+  display: grid;
+  place-content: center;
+  position: absolute;
+  background-color: var(--background-color);
+  
+}
+
+.skeleton__center {
+  position: relative;
+}
+
+.skeleton__center h1 {
+  width: 250px;
+  height: 2rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.skeleton__center .genre {
+  width: 300px;
+  border-radius: 8px;
+  margin-inline: .2rem;
+  height: 50px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.skeleton__center .genre div {
+  width: 90px;
+  height: 30px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.skeleton__center .overview {
+  line-height: 26px;
+  margin-block: 1rem;
+}
+
+.skeleton__center .overview p {
+  width: 90vw;
+  height: .85rem;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  transition: width ease .5s;
+}
+
+.skeleton__center .overview p:nth-child(5) {
+  width: 55vw;
+}
+.skeleton__center .overview p:last-child {
+  width: 75vw;
+}
+
+.skeleton__center .release {
+  height: 25px;
+  width: 150px;
+  margin-top: 2rem;
+}
+
+.skeleton__center .link {
+  width: 120px;
+  height: 40px;
+  display: inline-block;
+  padding: .5rem 1.5rem;
+  border-radius: 12px;
+  margin-block: .5rem;
+  border: none;
+  position: absolute;
+  right: 0;
+}

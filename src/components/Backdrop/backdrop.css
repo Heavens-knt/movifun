@@ -1,0 +1,15 @@
+.backdrop {
+  width: 100vw;
+  position: fixed;
+  right: 0;
+  transform: translateY(100vw);
+  top: calc(50vh);
+  height: calc(50vh + (var(--header-height)));
+  background-color: rgba(10, 10, 30, .5);
+  transition: transform 1s ease-in;
+  z-index: 4;
+}
+
+.backdrop__active {
+  transform: translateX(0);
+}

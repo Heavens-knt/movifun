@@ -1,0 +1,55 @@
+.header {
+  width: 100%;
+  height: var(--header-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .2rem .5rem;
+  position: fixed;
+  color: white;
+  background-color: var(--background-color);
+  position: fixed;
+  z-index: 5;
+}
+
+.header .logo {
+  font-size: 30px;
+  font-weight: 600;
+  background-image: linear-gradient(45deg, var(--prim-color), var(--sec-color));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hamburger {
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.hamburger div {
+    width: 35px;
+    height: 3.5px;
+    margin: .2em auto;
+    border-radius: 5px;
+    background-color: var(--sec-color);
+    transition-duration: 1.2s;
+}
+
+#active div:nth-child(1) {
+    transform-origin: 10px 10px;
+    transform: rotate(45deg);
+}
+
+#active div:nth-child(3) {
+    transform-origin: 5px -8px;
+    transform: rotate(-45deg);
+}
+
+#active div:nth-child(2) {
+    opacity: 0;
+}

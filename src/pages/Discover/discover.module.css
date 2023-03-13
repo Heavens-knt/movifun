@@ -1,0 +1,121 @@
+.discover {
+  width: 100%;
+  padding-bottom: 1rem;
+  height: auto;
+  min-height: calc(100vh - (var(--header-height)));
+  position: absolute;
+  top: var(--header-height);
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow-y: scroll;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.discover .header {
+  width: 100%;
+  padding-block: 1.5rem;
+  padding-inline: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 2rem; 
+}
+
+.discover .header .title {
+  margin-block: 1rem;
+  font-size: 23px;
+  font-weight: 400;
+}
+
+.discover .slider {
+  width: 100%;
+  height: auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin-block: 1rem;
+}
+
+.discover__search {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-block: 1rem;
+}
+
+.discover__search input {
+  width: 65%;
+  height: 40px;
+  font-size: 16px;
+  padding-inline: .5rem;
+  outline: none;
+
+  border-radius: 15px;
+  color: var(--sec-color);
+  border: 1px solid var(--sec-color);
+  background-color: transparent;
+}
+
+.discover__search button {
+  width: 30%;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 18px;
+  border: none;
+  color: var(--sec-color);
+  background-color: #112;
+  font-weight: bold;
+}
+
+.slide__skeleton {
+  flex: 0 0 auto;
+  width: 160px;
+  min-height: 300px;
+  height: auto;
+  border-radius: 20px;
+  margin: .5rem;
+}
+
+.image__skeleton {
+  width: 160px;
+  height: 220px;
+  border-radius: 20px;
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.ring__skeleton{
+  width: 50px;
+  height: 50px;
+  display: grid;
+  padding: 1px;
+  place-content: center;
+  border-radius: 50%;
+  background-color: #fff;
+  position: absolute;
+  font-size: 18px;
+  bottom: -20px;
+  left: 20px;
+}
+
+
+.slide__skeleton .title__skeleton {
+  width: 80%;
+  height: 1.5rem;
+  margin-block: .5rem;
+  border-radius: 10px;
+}
+
+.slide__skeleton .release__skeleton {
+  width: 70%;
+  height: 1.5rem;
+  border-radius: 10px;
+}
+

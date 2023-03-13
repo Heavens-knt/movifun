@@ -1,0 +1,39 @@
+.navbar {
+  width: 100vw;
+  height: calc(50vh - (var(--header-height)));
+  display: grid;
+  place-content: center;
+  position: fixed;
+  color: #fff;
+  top: var(--header-height);
+  background-color: #112;
+  transform: translateX(-100vh);
+  transition: all 1s ease-in;
+  z-index: 4;
+}
+
+.navbar ul {
+  width: 80%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+}
+
+.navbar ul li {
+  font-size: 20px;
+  font-weight: 400;
+  font-weight: bolder;
+}
+
+.navbar ul li a {
+  padding: .5rem 1.5rem;
+  display: inline-block;
+}
+
+.navbar__active {
+  transform: translateX(0);
+}

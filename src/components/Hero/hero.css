@@ -1,0 +1,112 @@
+.hero {
+  width: 100vw;
+  /*min-height: calc(100vh - (var(--header-height)));*/
+  min-height: 100vh;
+  height: auto;
+  padding: 1rem 1.2rem;
+  display: grid;
+  place-content: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  isolation: isolate;
+  position: relative;
+}
+
+.hero::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-color: rgba(10, 10, 30, .4);
+  position: absolute;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px); 
+}
+
+.hero__center {
+  position: relative;
+}
+
+.hero__title {
+  transform: translate(10px 20px);
+  opacity: 0;
+  transition: all 1s ease;
+  color: white;
+}
+
+.hero__title, .hero__sekeleton .head {
+  font-size: 26px;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.hero__genre {
+  font-size: 18px;
+  color: white;
+  opacity: 0;
+}
+
+.hero__genre span{
+  font-size: 14px;
+  color: #112;
+  padding: .2rem .8rem;
+  border-radius: 8px;
+  margin-inline: .2rem;
+  font-weight: 500;
+  background-color: var(--sec-color);
+}
+
+.hero__overview {
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 17px;
+  line-height: 26px;
+  font-weight: 500;
+  margin-block: 1rem;
+  opacity: 0;
+  background-image: linear-gradient(90deg, white, var(--prim-color));
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  transition-delay: 1s;
+}
+
+.hero__release {
+  color: white;
+}
+
+
+.hero__release  span{
+  font-size: 17px;
+  font-weight: 500;
+  color: white;
+  opacity: 0;
+  transform: translate(10px 20px);
+}
+
+.hero__active  span{
+  opacity: 1;
+  transform: translate(0,0)
+}
+
+.hero__link {
+  width: max-content;
+  display: inline-block;
+  padding: .5rem 1.5rem;
+  font-size: 18px;
+  border-radius: 12px;
+  color: var(--sec-color);
+  border: 1px solid var(--sec-color);
+  margin-block: .5rem;
+  position: absolute;
+  right: 0;
+}
+
+.hero__active {
+  transform: translate(0 0);
+  opacity: 1;
+}
+
