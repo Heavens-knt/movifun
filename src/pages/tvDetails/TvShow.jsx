@@ -50,7 +50,7 @@ const TvShow = () => {
         <div className="media__writer">
           <p>Writer: </p>
           <div>
-            {writers?.map(w => <span key={w.id}>{w.name}, </span>)}
+            {writers?.map((w, i) => <span key={w.id}>{ writers?.length > i  ? `${w.name}, ` : `${w.name}`}</span>)}
           </div>
         </div>
         <div className="media__director">
@@ -72,6 +72,7 @@ const TvShow = () => {
         <h1 className="seasons__title">All Seasons</h1>
         <section className="seasons__carrousel slider">
           {movie?.seasons.map(season => (
+            season.season_number > 0 &&
             <Link to={`/tv/${mediaId}/season/${season.season_number}`} key={season.id} className="season_slide slide">
               <Img className="season__image" src={ getImageUrl(season.poster_path) || poster} width="180px" height="250px" alt="season Image" />
               <div className="season__title">
