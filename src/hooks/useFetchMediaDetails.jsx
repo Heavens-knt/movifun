@@ -16,10 +16,11 @@ const useFetchMediaDetails = (mediaType, id) => {
           setError(null)
           setLoading(false)
           console.log(data)
+        } else {
+          setError(error)
+          setLoading(true)
         }
-        setError(error)
-        setLoading(true)
-        console.log(error)
+      
       } catch (error) {
         setLoading(true)
         setError(error)

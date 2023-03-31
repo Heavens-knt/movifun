@@ -8,8 +8,13 @@ const tmdbHeader = new Headers({
 const fetchData = async (endpoint) => {
   try {
     const response = await fetch(`${BASE_URL}${endpoint}`, {headers: tmdbHeader})
-    const data = await response.json()
-    return {error: null, data: data};
+    if (response.ok && response.status === 200) {
+      const data = await response.json()
+      return {error: null, data: data}; 
+    } else {
+      throw new Error("Resource not found !")
+    }
+    
   } catch (error) {
     return {error: error, data: null}
   }
