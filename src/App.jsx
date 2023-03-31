@@ -30,12 +30,12 @@ function App() {
         setNavOpen={setNavOpen} 
       />
       <Routes>
-        <Route path='/' element={<Home />} errorElement={<NotFound />} />
-        <Route path='/movie/:movieID' element={<Movie />} errorElement={<NotFound />}/>
-        <Route path='/tv/:mediaId' element={<TvShow />} errorElement={<NotFound />} />
-        <Route path='/tv/:mediaId/season/:season_number' element={<Season />} errorElement={<NotFound />}/>
-        <Route path='/discover/:mediaType/:mediaKind' element={<Discover />}  errorElement={<NotFound />}/>
-        <Route path='/search/:query' element={<Search />} errorElement={<NotFound />} />
+        <Route path='/' element={<Home />} />
+        <Route path='/movie/:movieID' element={<Movie />} />
+        <Route path='/tv/:mediaId' element={<TvShow />} />
+        <Route path='/tv/:mediaId/season/:season_number' element={<Season />} />
+        <Route path='/discover/:mediaType/:mediaKind' element={<Discover />} />
+        <Route path='/search/:query' element={<Search />} />
         <Route path='*' element={<NotFound />}/>
       </Routes>
     </BrowserRouter>
