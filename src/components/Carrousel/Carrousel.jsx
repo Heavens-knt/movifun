@@ -31,7 +31,7 @@ const Carrousel = ({ name, data , btnName, showBtn, mediaType, mediaKind}) => {
           </>
         }
       </div>
-      {showBtn ? <Link to={`/discover/${mediaType}/${mediaKind}`} className="carrousel__link">All {btnName}</Link> : ""}
+      {showBtn ? <Link to={`/discover/${mediaType}/${mediaKind}`} className="carrousel__link">Plus de {btnName}</Link> : ""}
     </section>
   )
 }

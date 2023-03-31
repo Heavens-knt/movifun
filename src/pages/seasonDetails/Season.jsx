@@ -8,17 +8,27 @@ import { useParams } from "react-router-dom"
 import { dateFormat } from "../../utils/dateFormat"
 import Episonde from "../../components/EpisodeCard/Episonde"
 import Cast from "../../components/Cast/Cast"
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage"
 
 const Season = () => {
   const {mediaId, season_number} = useParams()
-  const {data: season} = useFetchData(`tv/${mediaId}/season/${season_number}?language=fr-FR`)
+  const {data: season, loading, error} = useFetchData(`tv/${mediaId}/season/${season_number}?language=fr-FR`)
   const {data: casts} = useFetchData(`tv/${mediaId}/season/${season_number}/credits?language=fr-FR`)
   const {data: videos} = useFetchData(`tv/${mediaId}/season/${season_number}/videos?language=fr-FR`)
   const {cast, crew} = casts
   const writers = crew?.filter(item => item.department === "Writing")
   const director = crew?.filter(item => item.job === "Director")
  
+  function Skeleton() {
+    return (
+      <section className="media__skeleton skeleton__anim">
+        <span className="skeleton-watch skeleton__anim"></span>
+      </section>
+    )
+  }
+
   return (
+    season.length !== 0 && !error ?
     <section className="media" style={{backgroundImage: `url("${getImageUrl(season?.poster_path)}")`}}>
       <section className="media__header">
         <div className="image__container"> 
@@ -83,6 +93,11 @@ const Season = () => {
           </div>))} 
         </section>
       </section>
+    </section>
+    :
+    <section className="media-error-skeleton">
+      <Skeleton />
+      <ErrorMessage message={error?.message} error={error} />
     </section>
   )
 }

@@ -6,45 +6,24 @@ import Genres from "../../components/Genres/Genres"
 import { useFetchData } from "../../hooks/useFetchData"
 import {useFetchMediaDetails} from "../../hooks/useFetchMediaDetails"
 import { getImageUrl } from "../../utils/api"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useParams } from "react-router-dom"
 import { dateFormat, runtime } from "../../utils/dateFormat"
+import backdrop_img from "../../assets/backdrop.jpg"
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage"
 
 const Movie = () => {
   const {movieID} = useParams()
-  const [images, setImages] = useState()
-  const movie = useFetchMediaDetails("movie", movieID)
+  const {data: movie,loading: movieLoading, error: movieError } = useFetchMediaDetails("movie", movieID)
   const {data: similar} = useFetchData(`movie/${movieID}/similar`)
-  const {data, loading} = useFetchData(`movie/${movieID}/credits`)
-  const {cast, crew} = data
+  const {data: credits, loading, error} = useFetchData(`movie/${movieID}/credits`)
+  const {cast, crew} = credits
   const {data: recommended} = useFetchData(`movie/${movieID}/recommendations`)
   const {data: videos} = useFetchData(`movie/${movieID}/videos`)
   const writers = crew?.filter(item => item.department === "Writing")
   const director = crew?.filter(item => item.job === "Director")
    
-
-  useEffect(() => {
-    let ignore = false 
-    
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`https://api.themoviedb.org/3/movie/${movieID}/images?api_key=2c1ed4bf51dc85df5af0cb15a8ee3bc5`)
-        const data = await response.json()
-        const {posters} = data
-        if(!ignore) setImages(posters)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
-    fetchData()
-
-    return () => {
-      ignore = true
-    }
-  }, [movieID])
-   
-
+ 
   function Skeleton() {
     return (
       <section className="media__skeleton skeleton__anim">
@@ -52,10 +31,10 @@ const Movie = () => {
       </section>
     )
   }
+  
   return (
+    movie !== null && !movieError ?
     <section className="media" style={{backgroundImage: `url("${getImageUrl(movie?.backdrop_path)}")`}}>
-      {movie !== undefined ?
-      <>
       <section className="media__header">
         <div className="image__container"> 
           <Img src={getImageUrl(movie?.poster_path) || poster} className="movie__poster" height="100%" width="100%" alt="poster"/>
@@ -83,8 +62,7 @@ const Movie = () => {
           <div>
             <h1>Runtime:</h1>
             <p>{runtime(movie?.runtime)}</p>
-          </div>
-
+          </div> 
         </div>
         <div className="media__writer">
           <p>Writer: </p>
@@ -95,6 +73,26 @@ const Movie = () => {
         <div className="media__director">
           <p>Director: </p>
           <p>{director?.map(item => <span key={item.id}>{item.name}</span>)}</p>
+        </div>
+        <div className="media__companies">
+          <h1>Production Companies</h1>
+          <div className="companies slider">
+            {movie?.production_companies?.map(companie => (
+              <div key={companie.id} className="company slide">
+                <div className="company__logo">  
+                  <img src={getImageUrl(companie.logo_path)} alt="companie" />
+                </div>
+                <p>{companie.name}</p>
+                <p>Country: <strong>{companie.origin_country}</strong></p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="media__countries">
+          <h1>Production Countries</h1>
+          <div className="countries">
+              {movie?.production_countries.map(country => <p>{country.name}</p>)}
+          </div>
         </div>
       </section>
       <section className="media__cast">
@@ -122,22 +120,24 @@ const Movie = () => {
           </div>))} 
         </section>
       </section>
-      <section className="media__images">
+      {/* THE SECTION WHERE SOME IMAGES WILL BE DESPLAIED */}
+      {/*<section className="media__images">
         <h1>Images</h1>
         <section className="images__carrousel slider">
           {images?.slice(0, 20)?.map(image => <Img src={getImageUrl(image.file_path) || poster} key={image.file_path} className="image slide" width="300px" height="200px" alt="movie image" />)}
         </section>
-      </section>
+      </section>*/}
       <section className="similar">
         <Carrousel mediaType="movie" name="Similar" data={similar.results} showBtn={false} />
       </section>
       <section className="recommended">
         <Carrousel mediaType="movie" name="Recommendations" data={recommended.results} showBtn={false} />
       </section>
-      </> :
-
+    </section>
+    :
+    <section className="media-error-skeleton">
       <Skeleton />
-    }
+      <ErrorMessage message={movieError?.message} error={movieError} />
     </section>
   )
 }

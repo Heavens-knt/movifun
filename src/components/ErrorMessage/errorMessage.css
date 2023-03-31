@@ -1,0 +1,23 @@
+.error-message {
+  color: #ffffff;
+  width: 98%;
+  padding: .5rem;
+  top: -200px;
+  opacity: 0;
+  border-radius: 10px;
+  text-align: center;
+  margin-inline: auto;
+  position: absolute;
+  background-color: #ff0a05;
+  transition: all .5s ease-in-out;
+}
+
+.error-message-active {
+  top: 0;
+  opacity: 1;
+}
+
+.error-message p {
+  font-size: 16px;
+  font-weight: 500;
+}

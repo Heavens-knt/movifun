@@ -42,9 +42,9 @@ const Hero = ({hero}) => {
         </div>
         <p className={`hero__overview ${isActive ? "hero__active" : ""}`}>{overview}</p>
         <div className={`hero__release ${isActive ? "hero__active" : ""}`}>
-          Release: <span>{dateFormat(hero?.release_date)}</span>
+          Sortie: <span>{dateFormat(hero?.release_date)}</span>
         </div>
-        <Link to={isMovie !== undefined ? `/movie/${hero.id}` : `/tv/${hero.id}`} className="hero__link">See More</Link>
+        <Link to={isMovie !== undefined ? `/movie/${hero.id}` : `/tv/${hero.id}`} className="hero__link">Plus d'info</Link>
       </div>  
     </section>
   )

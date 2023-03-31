@@ -1,10 +1,8 @@
 import { useState } from 'react';
 import { Link,useNavigate } from 'react-router-dom';
-import searchIcon from "../../assets/search.svg"
 import './Header.css';
 
 const Header = ({navOpen, toggleNav}) => {
-  const [searchActive, setSearchActive] = useState(false)
   const [searchValue, setSearchValue] = useState("")
   const navigate = useNavigate()
 

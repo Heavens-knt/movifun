@@ -9,10 +9,9 @@ const fetchData = async (endpoint) => {
   try {
     const response = await fetch(`${BASE_URL}${endpoint}`, {headers: tmdbHeader})
     const data = await response.json()
-    return data;
+    return {error: null, data: data};
   } catch (error) {
-    console.log(error.message)
-    return
+    return {error: error, data: null}
   }
 }
 

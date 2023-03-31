@@ -7,11 +7,12 @@ import {useFetchMediaDetails} from "../../hooks/useFetchMediaDetails"
 import { getImageUrl } from "../../utils/api"
 import { Link, useParams } from "react-router-dom"
 import { dateFormat, runtime } from "../../utils/dateFormat"
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage"
 
 const TvShow = () => {
 
   const {mediaId} = useParams()
-  const movie = useFetchMediaDetails("tv", mediaId)
+  const {data: movie, loading, error: movieError} = useFetchMediaDetails("tv", mediaId)
   const {data: similar} = useFetchData(`tv/${mediaId}/similar?language=fr-FR`)
   const {data: casts} = useFetchData(`tv/${mediaId}/credits?language=fr-FR`)
   const {data: recommended} = useFetchData(`tv/${mediaId}/recommendations?language=fr-FR`)
@@ -19,8 +20,19 @@ const TvShow = () => {
   const { crew, cast } = casts
   const writers = crew?.filter(item => item.department === "Writing" || item.known_for_department === "Writing")
   const director = crew?.filter(item => item.job === "Director")
+
+
+  function Skeleton() {
+    return (
+      <section className="media__skeleton skeleton__anim">
+        <span className="skeleton-watch skeleton__anim"></span>
+      </section>
+    )
+  }
   
   return (
+
+    (movie !== null && !movieError ?
     <section className="media" style={{backgroundImage: `url("${getImageUrl(movie?.backdrop_path)}")`}}>
       <section className="media__header">
         <div className="image__container"> 
@@ -57,6 +69,26 @@ const TvShow = () => {
           <p>Director: </p>
           <p>{director?.map(item => <span key={item.id}>{item.name}</span>)}</p>
         </div>
+        <div className="media__companies">
+          <h1>Production Companies</h1>
+          <div className="companies slider">
+            {movie?.production_companies?.map(companie => (
+              <div key={companie.id} className="company slide">
+                <div className="company__logo">  
+                  <img src={getImageUrl(companie.logo_path)} alt="companie" />
+                </div>
+                <p>{companie.name}</p>
+                <p>Country: <strong>{companie.origin_country}</strong></p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="media__countries">
+          <h1>Production Countries</h1>
+          <div className="countries">
+              {movie?.production_countries.map(country => <p>{country.name}</p>)}
+          </div>
+        </div>
         <div className="seasons__total">
           <section className="left">
             <p>Total Seasons</p>
@@ -73,11 +105,10 @@ const TvShow = () => {
         <section className="seasons__carrousel slider">
           {movie?.seasons.map(season => (
             season.season_number > 0 &&
-            <Link to={`/tv/${mediaId}/season/${season.season_number}`} key={season.id} className="season_slide slide">
+            <Link to={`/tv/${mediaId}/season/${season.season_number}`} key={season.id} className="season__slide slide">
               <Img className="season__image" src={ getImageUrl(season.poster_path) || poster} width="180px" height="250px" alt="season Image" />
               <div className="season__title">
-                <p>{season.name}</p>
-                <button className="season__btn">More Info</button>
+                <button className="season__btn">{season.name}</button>
               </div>
             </Link>
           ))}
@@ -121,6 +152,12 @@ const TvShow = () => {
         <Carrousel mediaType="tv" name="Recommendations" data={recommended.results} showBtn={false} />
       </section>
     </section>
+    :
+    <section className="media-error-skeleton">
+      <Skeleton />
+      <ErrorMessage message={movieError?.message} error={movieError} />
+    </section>
+    )
   )
 }
 

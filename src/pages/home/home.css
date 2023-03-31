@@ -3,12 +3,17 @@
   height: 100vh;
 }
 
+.Home > section {
+  width: 100%;
+  height: auto;
+  background-color: rgba(17, 17, 30, .85);
+}
+
 .home__media {
   width: 100%;
   height: auto;
   padding-top: 1rem;
   margin-block: 2rem;
-  background-color: #110;
 }
 
 .home__media__top {
@@ -34,13 +39,12 @@
 
 .Home .hero__skeleton {
   width: 100%;
-  height: calc(100vh - 80px);
-  top: 80px;
+  height: calc(100vh - var(--header-height));
+  top: var(--header-height);
   display: grid;
   place-content: center;
   position: absolute;
-  background-color: var(--background-color);
-  
+  background-color: var(--background-color); 
 }
 
 .skeleton__center {

@@ -6,7 +6,7 @@
   padding: .5rem 1rem;
   margin-block: 1rem;
   border-radius: 15px;
-  background-color: #112;
+  background-color: rgba(17, 17, 34, .3);
 }
 
 .carrousel__title {
@@ -32,7 +32,8 @@
   width: max-content;
   display: inline-block;
   padding: .3rem 1rem;
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: 500;
   border-radius: 12px;
   color: var(--sec-color);
   border: 1px solid var(--sec-color);
@@ -85,6 +86,7 @@
   font-weight: 500;
   margin: .3rem 0;
   width: 95%;
+  color: white;
 }
 
 .slide__release {

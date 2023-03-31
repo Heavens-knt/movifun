@@ -9,6 +9,7 @@
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
+  background-color: rgba(10, 10, 37, .85);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -30,11 +31,12 @@
 
 .discover .header .title {
   margin-block: 1rem;
-  font-size: 23px;
+  font-size: 30px;
   font-weight: 400;
+  color: var(--sec-color);
 }
 
-.discover .slider {
+.discover .slider, .skeleton {
   width: 100%;
   height: auto;
   display: grid;

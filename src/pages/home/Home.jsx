@@ -5,15 +5,17 @@ import { useFetchData } from "../../hooks/useFetchData"
 import "./home.css"
 import Popula from "./Popular/Popula"
 import Trending from "./Trending/Trending"
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage"
 
 const Home = () => {
   const [tab, setTab] = useState("popular")
-  
-  const {data: hero, loading } = useFetchData("trending/all/day?language=fr-FR")
+  const {data: hero, loading, error} = useFetchData("trending/all/day?language=fr-FR")  
+
   const Skeleton = () => {
     const [firstParaWidth, setFirstParaWidth] = useState(80)
     const [secParaWidth, setSecParaWidth] = useState(50)
     const [thirdParaWidth, setThirdParaWidth] = useState(90)
+    
     useEffect(() => {
       setInterval(() => {
         setFirstParaWidth(Math.floor(Math.random() * 30) + 60)
@@ -49,8 +51,8 @@ const Home = () => {
         </div>
         <p className="release skeleton__anim"></p>
         <button className="link skeleton__anim"></button>
-          
         </div>
+        <ErrorMessage message={error?.message} error={error} />
       </div>
     )
   }
@@ -58,8 +60,8 @@ const Home = () => {
 
   return (
     <section className="Home">
-      {!loading ? 
-        <>
+      {!loading && !error ? 
+        <section>
           <Hero hero={hero?.results?.at(0)} />
           <Trending/>
           <section className="home__media">
@@ -70,7 +72,7 @@ const Home = () => {
             <Popula tab={tab}/>
             <Footer />
           </section>
-       </> : <Skeleton />
+       </section> : <Skeleton />
       }
     </section>
   )

@@ -1,9 +1,13 @@
 .footer {
   width: 100%;
   height: auto;
-  background-color: #112;
   position: relative;
+  color: white;
   padding: .5rem;
+  margin-top: 1rem;
+  border-top-right-radius: 14px;
+  border-top-left-radius: 14px;
+  background-color: rgba(17, 17, 34, .3);
 }
 
 .footer-about {
