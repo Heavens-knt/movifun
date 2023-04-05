@@ -18,13 +18,14 @@ const useFetchData = (endpoint, page=1) => {
     const getData = async (endpoint) => {
       try {
         //const data = await fetchData(endpoint)
-        const response = await fetch(`${BASE_URL}${endpoint}`, {headers: tmdbHeader})
-        const data = await response.json()
+        const {data, error} = await fetchData(`${endpoint}`)
 
-        if(!ignore) {
+        if(!ignore && data) {
           setData(data)
           setLoading(false)
           setError(null)
+        } else {
+          throw new Error(error.message)      
         }
       } catch (error) {
         setData([])

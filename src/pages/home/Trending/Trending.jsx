@@ -1,12 +1,11 @@
 import Carrousel from "../../../components/Carrousel/Carrousel"
-import { useFetchData } from "../../../hooks/useFetchData"
 
 const Trending = () => {
-  const {data: trendings, loading} = useFetchData("trending/all/day")
+  const endpoint = "trending/all/day?language=fr-FR"
   const name = "Trending"
   return (
     <section className="home__trending">
-      <Carrousel name={name} btnName={name} data={trendings.results} showBtn={false} mediaType="trending/all/day"/>
+      <Carrousel name={name} btnName={name} showBtn={false} mediaType="trending/all/day" endpoint={endpoint}/>
     </section>
   )
 }

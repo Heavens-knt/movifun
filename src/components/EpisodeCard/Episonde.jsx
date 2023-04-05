@@ -15,7 +15,7 @@ const Episonde = ({episode, seasonNumber}) => {
   }
   
   return (
-    <a key={episode.id} href="#" className="season_slide episode__slide slide">
+    <a key={episode.id} href="#" className="episode__slide slide">
       <Img className="episode__image" src={ getImageUrl(episode.still_path) || poster} width="100%" height="180px" alt="episode Image" />
       <div className="episode__body">
         <p className="episode__name">{episode.name}</p>

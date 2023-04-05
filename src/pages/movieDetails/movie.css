@@ -24,7 +24,6 @@
 
 .media::after {
   content: "";
-  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -252,6 +251,43 @@
   font-size: 25px;
   margin-block: .5rem;
   text-transform: capitalize;
+}
+
+.official__card .show-pop, .image__container .show-pop {
+  opacity: 1;
+  display: flex;
+  z-index: 10;
+}
+
+.video-play {
+  width: 100vw;
+  height: calc(100vh - var(--header-height));
+  top: var(--header-height);
+  left: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(10, 10, 30, .85);
+  position: fixed;
+  opacity: 0;
+  transition: all .5s ease;
+  z-index: 100;
+}
+
+.video-play video {
+  width: 100%;
+  height: auto;
+}
+
+.video-play span {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: .5rem 1.2rem;
+  font-size: 20px;
+  font-weight: 500;
+  border: 1px solid white;
+  border-radius: 12px;
 }
 
 .official__image {

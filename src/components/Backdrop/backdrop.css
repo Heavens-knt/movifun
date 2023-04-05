@@ -6,7 +6,7 @@
   top: calc(50vh);
   height: calc(50vh + (var(--header-height)));
   background-color: rgba(10, 10, 30, .5);
-  transition: transform 1s ease-in;
+  transition: transform .5s ease-in;
   z-index: 4;
 }
 

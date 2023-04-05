@@ -27,9 +27,10 @@ const Search = () => {
   const handleSearch = async (query, page) => {
     try {
       setLoading(true)
-      const {data, error} = await fetchData(`/search/multi?query=${query}&language=fr-FR&adult=false&page=${page}`)
+      const {data, error} = await fetchData(`search/multi?query=${query}&language=fr-FR&adult=false&page=${page}`)
       if (data && !error) {
-        setMedias(prev =>  [...prev ,...data?.results]) 
+        setMedias([])
+        setMedias(prev => [...prev, ...data?.results]) 
         setLoading(false)
       } 
       setError(error)
@@ -37,10 +38,27 @@ const Search = () => {
       console.log(error)
     }
   }
+  
+  const loadMoreSearch = async (query, page) => {
+    setLoading(true)
+    const {data, error} =  await fetchData(`search/multi?query=${query}&language=fr-FR&adult=false&page=${page}`)
+    if(data && !error) {
+      setLoading(false)
+      setMedias(prev => [...prev, ...data?.results])
+      setError(null)
+    } else {
+      setError(error)
+      setLoading(true)
+    }
+  }
+   
+  useEffect(() => {
+    loadMoreSearch(query, searchPage)
+  }, [searchPage])
 
   useEffect(() => {
     handleSearch(query, searchPage)
-  }, [query, searchPage])
+  }, [query])
  
   return (
     <section className={styles.discover} style={{backgroundImage:`url("${getImageUrl()}")`}}>

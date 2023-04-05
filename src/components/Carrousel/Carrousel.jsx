@@ -1,8 +1,19 @@
+import { useEffect, useRef } from "react"
 import { Link } from "react-router-dom"
+import { useFetchData } from "../../hooks/useFetchData"
 import "./carrousel.css"
 import Slide from "./Slide"
 
-const Carrousel = ({ name, data , btnName, showBtn, mediaType, mediaKind}) => { 
+const Carrousel = ({ name, btnName, showBtn, mediaType, mediaKind, endpoint}) => { 
+  
+  const reference = useRef()
+
+  const {data , error} = useFetchData(endpoint)
+
+  useEffect(() => {
+    reference.current.scrollTo(0,0)
+  }, [])
+
   const Skeleton = () => {
     return (
       <section className="slide__skeleton">
@@ -16,11 +27,11 @@ const Carrousel = ({ name, data , btnName, showBtn, mediaType, mediaKind}) => {
   }
 
   return (
-    <section className="carrousel">
+    <section ref={reference} className="carrousel">
       <h1 className="carrousel__title">{name}</h1>
       <div className="carrousel__slider">
-        {data ?  
-          data?.map(item => <Slide key={item.id} mediaType={mediaType} mediaId={item.id} item={item}/>) 
+        {data && !error ?  
+          data?.results?.map(item => <Slide key={item.id} mediaType={mediaType} mediaId={item.id} item={item}/>) 
           : 
           <>
             <Skeleton />    

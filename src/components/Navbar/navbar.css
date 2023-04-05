@@ -8,7 +8,7 @@
   top: var(--header-height);
   background-color: #112;
   transform: translateX(-100vh);
-  transition: all 1s ease-in;
+  transition: all .5s ease-in;
   z-index: 4;
 }
 
@@ -27,6 +27,16 @@
   font-size: 20px;
   font-weight: 400;
   font-weight: bolder;
+  transform: translateX(-100vh);
+  transition: all .5s ease;
+}
+
+.navbar ul li:first-child {
+  transition-delay: .25s;
+}
+
+.navbar ul li:last-child {
+  transition-delay: .5s;
 }
 
 .navbar ul li a {
@@ -35,5 +45,9 @@
 }
 
 .navbar__active {
+  transform: translateX(0);
+}
+
+.navbar__active ul > li {
   transform: translateX(0);
 }

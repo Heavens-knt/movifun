@@ -28,21 +28,25 @@ const Discover = () => {
   useEffect(() => {
     let ignore = false
     
-    const getData = async () => {
+    const getData = async (page) => {
       try {
-        const {data, error} = await fetchData(`${mediaType}/${mediaKind}?language=fr-FR&page=${page}`)
+        setLoading(true)
+        const {data, error} = await fetchData(`${mediaType}/${mediaKind}?page=${page}&language=fr-FR`)
         if(!ignore && data) {
+          console.log(data)
+          setLoading(false)
           setMedias(pre => [...pre, ...data.results])
+        } else{
+          setError(error)
+          setLoading(false)
         }
-        setError(error)
-        setLoading(false)
       } catch (error) {
         console.log(error)
         setError(error)
       }
   }
 
-    getData()
+    getData(page)
     return () => {
       ignore = true
     }

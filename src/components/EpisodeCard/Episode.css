@@ -1,9 +1,14 @@
+.episodes__carrousel {
+  scroll-snap-type: x mandatory;
+}
+
 .episode__slide {
   background-color: #112;
   display: inline-block;
-  width: auto;
+  width: 100%;
   height: auto;
   margin-block: 1rem;
+  scroll-snap-align: start;
 }
 
 .episode__image {

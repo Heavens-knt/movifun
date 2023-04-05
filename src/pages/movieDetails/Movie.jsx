@@ -2,28 +2,35 @@ import "./movie.css"
 import poster from "../../assets/backdrop.jpg"
 import Img from "../../components/lazyLoaderImage/Img"
 import Carrousel from "../../components/Carrousel/Carrousel"
-import Genres from "../../components/Genres/Genres"
 import { useFetchData } from "../../hooks/useFetchData"
 import {useFetchMediaDetails} from "../../hooks/useFetchMediaDetails"
 import { getImageUrl } from "../../utils/api"
-import { useState } from "react"
 import { useParams } from "react-router-dom"
 import { dateFormat, runtime } from "../../utils/dateFormat"
 import backdrop_img from "../../assets/backdrop.jpg"
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage"
+import VideosOfficials from "../../components/VideosOfficals/VideosOfficials"
+import { useEffect, useState } from "react"
+import ReactPlayer from "react-player/youtube"
 
 const Movie = () => {
   const {movieID} = useParams()
-  const {data: movie,loading: movieLoading, error: movieError } = useFetchMediaDetails("movie", movieID)
-  const {data: similar} = useFetchData(`movie/${movieID}/similar`)
-  const {data: credits, loading, error} = useFetchData(`movie/${movieID}/credits`)
+  const [showPop, setShowPop] = useState(false)
+  const [videoId, setVideoId] = useState(null)
+  const {data: movie, error: movieError } = useFetchMediaDetails("movie", movieID)
+  const {data: credits} = useFetchData(`movie/${movieID}/credits`)
   const {cast, crew} = credits
-  const {data: recommended} = useFetchData(`movie/${movieID}/recommendations`)
-  const {data: videos} = useFetchData(`movie/${movieID}/videos`)
   const writers = crew?.filter(item => item.department === "Writing")
   const director = crew?.filter(item => item.job === "Director")
-   
- 
+  const videos_endpoint = `movie/${movieID}/videos?language=fr-FR`
+  const recommended_endpoint =  `movie/${movieID}/recommendations?adult=false`
+  const similar_endpoint = `movie/${movieID}/similar?adult=false` 
+  const {data: videos} = useFetchData(videos_endpoint)
+  
+  useEffect(() => {
+    window.scrollTo(0,0)
+  }, [])
+
   function Skeleton() {
     return (
       <section className="media__skeleton skeleton__anim">
@@ -36,9 +43,26 @@ const Movie = () => {
     movie !== null && !movieError ?
     <section className="media" style={{backgroundImage: `url("${getImageUrl(movie?.backdrop_path)}")`}}>
       <section className="media__header">
-        <div className="image__container"> 
+        <div className="image__container">
+          
+          <div className={`video-play ${showPop ? "show-pop" : ""}`}>
+            <ReactPlayer url={`https://www.youtube.com/watch?v=${videoId}`} controls />
+            <span 
+                onClick={() => {
+                  setShowPop(false)
+                  setVideoId(null)
+                }}
+              >Close</span>
+          </div>
+
           <Img src={getImageUrl(movie?.poster_path) || poster} className="movie__poster" height="100%" width="100%" alt="poster"/>
-          <span className="watch-trailer">Watch Trailer</span>
+          <span 
+              className="watch-trailer"
+              onClick={() => {
+                setVideoId(videos?.results.at(0).key)
+                setShowPop(true)
+              }}
+            >Watch Trailer</span>
         </div>
         <section className="header__title">
           <h1 className="media__title">{movie?.title}</h1>
@@ -109,16 +133,8 @@ const Movie = () => {
       </section>
       <section className="official__videos">
         <h1>official videos</h1>
-        <section className="official__carrousel slider">
-          {videos?.results?.map(video => (
-            <div key={video.id} className="offucial__card slide">
-              <div className="official__image">
-                <Img src={`https://img.youtube.com/vi/${video.key}/mqdefault.jpg`} width="220px" height="120px" alt="official" />
-                <span className="official__player">Play</span>       
-              </div>
-            <p className="official__title">{video.name}</p>
-          </div>))} 
-        </section>
+         {/*  Official Videos */}
+        <VideosOfficials endpoint={videos_endpoint} />
       </section>
       {/* THE SECTION WHERE SOME IMAGES WILL BE DESPLAIED */}
       {/*<section className="media__images">
@@ -128,10 +144,10 @@ const Movie = () => {
         </section>
       </section>*/}
       <section className="similar">
-        <Carrousel mediaType="movie" name="Similar" data={similar.results} showBtn={false} />
+        <Carrousel mediaType="movie" name="Similar" showBtn={false} endpoint={similar_endpoint} />
       </section>
       <section className="recommended">
-        <Carrousel mediaType="movie" name="Recommendations" data={recommended.results} showBtn={false} />
+        <Carrousel mediaType="movie" name="Recommendations" showBtn={false} endpoint={recommended_endpoint} />
       </section>
     </section>
     :

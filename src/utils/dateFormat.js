@@ -3,9 +3,9 @@ function dateFormat(arg) {
     const year = arg.slice(0, 4)
     const mounth = arg.slice(5, 7)
     const day = arg.slice(8, 10)
-    const mounths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Des"]
+    const mounths = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Desembre"]
     
-    return `${mounths.at(mounth - 1)} ${day} ${year}`
+    return `${day} ${mounths.at(mounth - 1)} ${year}`
   }
 }
 

@@ -1,4 +1,5 @@
 import "../movieDetails/movie.css"
+import { useState } from "react"
 import poster from "../../assets/backdrop.jpg"
 import Img from "../../components/lazyLoaderImage/Img"
 import Carrousel from "../../components/Carrousel/Carrousel"
@@ -6,22 +7,26 @@ import { useFetchData } from "../../hooks/useFetchData"
 import {useFetchMediaDetails} from "../../hooks/useFetchMediaDetails"
 import { getImageUrl } from "../../utils/api"
 import { Link, useParams } from "react-router-dom"
-import { dateFormat, runtime } from "../../utils/dateFormat"
+import { dateFormat } from "../../utils/dateFormat"
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage"
+import VideosOfficials from "../../components/VideosOfficals/VideosOfficials"
+import ReactPlayer from "react-player/youtube"
 
 const TvShow = () => {
 
   const {mediaId} = useParams()
-  const {data: movie, loading, error: movieError} = useFetchMediaDetails("tv", mediaId)
-  const {data: similar} = useFetchData(`tv/${mediaId}/similar?language=fr-FR`)
+  const [showPop, setShowPop] = useState(false)
+  const [videoId, setVideoId] = useState(null)
+  const {data: movie, error: movieError} = useFetchMediaDetails("tv", mediaId)
   const {data: casts} = useFetchData(`tv/${mediaId}/credits?language=fr-FR`)
-  const {data: recommended} = useFetchData(`tv/${mediaId}/recommendations?language=fr-FR`)
-  const {data: videos} = useFetchData(`tv/${mediaId}/videos?language=fr-FR`)
   const { crew, cast } = casts
   const writers = crew?.filter(item => item.department === "Writing" || item.known_for_department === "Writing")
   const director = crew?.filter(item => item.job === "Director")
-
-
+  const videos_endpoint = `tv/${mediaId}/videos?language=fr-FR`
+  const recommended_endpoint = `tv/${mediaId}/recommendations?language=fr-FR&adult=false`
+  const similar_endpoint = `tv/${mediaId}/similar?language=fr-FR&adult=false`
+  const {data: videos} = useFetchData(videos_endpoint)
+  
   function Skeleton() {
     return (
       <section className="media__skeleton skeleton__anim">
@@ -36,8 +41,23 @@ const TvShow = () => {
     <section className="media" style={{backgroundImage: `url("${getImageUrl(movie?.backdrop_path)}")`}}>
       <section className="media__header">
         <div className="image__container"> 
+          <div className={`video-play ${showPop ? "show-pop" : ""}`}>
+            <ReactPlayer url={`https://www.youtube.com/watch?v=${videoId}`} controls />
+            <span 
+                onClick={() => {
+                  setVideoId(null)
+                  setShowPop(false)
+                }}
+              >Close</span>
+          </div>
           <Img src={getImageUrl(movie?.poster_path) || poster} className="movie__poster" height="100%" width="100%" alt="poser"/>
-          <span className="watch-trailer">Watch Trailer</span>
+          <span 
+              className="watch-trailer" 
+              onClick={() => {
+                setShowPop(true)
+                setVideoId(videos?.results.at(0).key)
+              }}
+            >Watch Trailer</span>
         </div>
         <section className="header__title">
           <h1 className="media__title">{movie?.title || movie?.name}</h1>
@@ -128,28 +148,14 @@ const TvShow = () => {
       </section>
       <section className="official__videos">
         <h1>official videos</h1>
-        <section className="official__carrousel slider">
-          {videos?.results?.map(video => (
-            <div key={video.id} className="offucial__card slide">
-              <div className="official__image">
-                <Img src={`https://img.youtube.com/vi/${video.key}/mqdefault.jpg`} width="220px" height="120px" alt="official" />
-                <span className="official__player">Play</span>       
-              </div>
-            <p className="official__title">{video.name}</p>
-          </div>))} 
-        </section>
+         {/*  Official Videos */}
+        <VideosOfficials endpoint={videos_endpoint} />
       </section>
-      {/*<section className="media__images">
-        <h1>Images</h1>
-        <section className="images__carrousel slider">
-          {images?.posters.slice(0, 20)?.map(image => <Img src={getImageUrl(image.file_path) || poster} key={image.file_path} className="image slide" width="300px" height="200px" alt="movie image" />)}
-        </section>
-      </section>*/}
       <section className="similar">
-        <Carrousel mediaType="tv" name="Similar" data={similar.results} showBtn={false} />
+        <Carrousel mediaType="tv" name="Similar" showBtn={false} endpoint={similar_endpoint} />
       </section>
       <section className="recommended">
-        <Carrousel mediaType="tv" name="Recommendations" data={recommended.results} showBtn={false} />
+        <Carrousel mediaType="tv" name="Recommendations" showBtn={false} endpoint={recommended_endpoint}/>
       </section>
     </section>
     :

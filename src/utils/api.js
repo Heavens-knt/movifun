@@ -7,7 +7,7 @@ const tmdbHeader = new Headers({
 
 const fetchData = async (endpoint) => {
   try {
-    const response = await fetch(`${BASE_URL}${endpoint}`, {headers: tmdbHeader})
+    const response = await fetch(`${BASE_URL}${endpoint}/`, {headers: tmdbHeader})
     if (response.ok && response.status === 200) {
       const data = await response.json()
       return {error: null, data: data}; 

@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <div className="footer">
       <section className="footer-about">
-        Lorem ipsum dolor sit amet, officia excepteur ex fugiat reprehenderit enim labore culpa sint ad nisi Lorem pariatur mollit ex esse exercitation amet. Nisi anim cupidatat excepteur officia. Reprehenderit nostrud nostrud ipsum Lorem est aliquip amet voluptate voluptate dolor minim nulla est proident.
+        Notre site dédié aux films et séries TV est votre destination idéale pour découvrir les dernières sorties, les acteurs, les réalisateurs, les critiques et bien plus encore. Nous nous appuyons sur la base de données de Themoviedb pour vous offrir des informations précises et complètes. Parcourez notre site pour découvrir les programmes les plus intéressants.
       </section>
       <section className="footer-socials">
         <Link to={"#"}><img src="/asserts/socials/facebook.svg" alt="facebook-icon" /></Link> 
