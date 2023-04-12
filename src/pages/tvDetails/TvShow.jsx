@@ -1,6 +1,7 @@
 import "../movieDetails/movie.css"
 import { useState } from "react"
-import poster from "../../assets/backdrop.jpg"
+import noPoster from "../../assets/no-poster.png"
+import avatar from "../../assets/avatar.png"
 import Img from "../../components/lazyLoaderImage/Img"
 import Carrousel from "../../components/Carrousel/Carrousel"
 import { useFetchData } from "../../hooks/useFetchData"
@@ -18,15 +19,12 @@ const TvShow = () => {
   const [showPop, setShowPop] = useState(false)
   const [videoId, setVideoId] = useState(null)
   const {data: movie, error: movieError} = useFetchMediaDetails("tv", mediaId)
-  const {data: casts} = useFetchData(`tv/${mediaId}/credits?language=fr-FR`)
+  const {data: casts} = useFetchData(`tv/${mediaId}/credits`)
   const { crew, cast } = casts
   const writers = crew?.filter(item => item.department === "Writing" || item.known_for_department === "Writing")
-  const director = crew?.filter(item => item.job === "Director")
-  const videos_endpoint = `tv/${mediaId}/videos?language=fr-FR`
-  const recommended_endpoint = `tv/${mediaId}/recommendations?language=fr-FR&adult=false`
-  const similar_endpoint = `tv/${mediaId}/similar?language=fr-FR&adult=false`
-  const {data: videos} = useFetchData(videos_endpoint)
-  
+  const directors = crew?.filter(item => item.job === "Director")
+  const {data: videos} = useFetchData(`tv/${mediaId}/videos?language=fr-FR`)
+ 
   function Skeleton() {
     return (
       <section className="media__skeleton skeleton__anim">
@@ -50,7 +48,7 @@ const TvShow = () => {
                 }}
               >Close</span>
           </div>
-          <Img src={getImageUrl(movie?.poster_path) || poster} className="movie__poster" height="100%" width="100%" alt="poser"/>
+          <Img src={getImageUrl(movie?.poster_path) || noPoster} className="movie__poster" height="100%" width="100%" alt="poser"/>
           <span 
               className="watch-trailer" 
               onClick={() => {
@@ -82,12 +80,12 @@ const TvShow = () => {
         <div className="media__writer">
           <p>Writer: </p>
           <div>
-            {writers?.map((w, i) => <span key={w.id}>{ writers?.length > i  ? `${w.name}, ` : `${w.name}`}</span>)}
+            {writers?.map((writer, index, tab) => <span key={writer.id}>{index === (tab.length - 1)  ? `${writer.name}.` : `${writer.name}, `}</span>)}
           </div>
         </div>
         <div className="media__director">
           <p>Director: </p>
-          <p>{director?.map(item => <span key={item.id}>{item.name}</span>)}</p>
+          <p>{directors?.map((director, index, tab) => <span key={director.id}>{index === (tab.length - 1) ? `${director.name}.` : `${director.name}, `}</span>)}</p>
         </div>
         <div className="media__companies">
           <h1>Production Companies</h1>
@@ -106,7 +104,7 @@ const TvShow = () => {
         <div className="media__countries">
           <h1>Production Countries</h1>
           <div className="countries">
-              {movie?.production_countries.map(country => <p>{country.name}</p>)}
+              {movie?.production_countries.map(country => <p key={country.name}>{country.name}</p>)}
           </div>
         </div>
         <div className="seasons__total">
@@ -126,7 +124,7 @@ const TvShow = () => {
           {movie?.seasons.map(season => (
             season.season_number > 0 &&
             <Link to={`/tv/${mediaId}/season/${season.season_number}`} key={season.id} className="season__slide slide">
-              <Img className="season__image" src={ getImageUrl(season.poster_path) || poster} width="180px" height="250px" alt="season Image" />
+              <Img className="season__image" src={ getImageUrl(season.poster_path) || noPoster} width="180px" height="250px" alt="season Image" />
               <div className="season__title">
                 <button className="season__btn">{season.name}</button>
               </div>
@@ -139,7 +137,7 @@ const TvShow = () => {
         <section className="cast__corrousel slider">
           {cast?.map(c => (
             <div key={c.id} className="cast__card slide">
-              <Img className="cast__image" src={getImageUrl(c.profile_path) ||poster} height="150px" width="150px" alt="cast-image" />
+              <Img className="cast__image" src={getImageUrl(c.profile_path) || avatar} height="150px" width="150px" alt="cast-image" />
               <p className="cast__name">{c.character}</p>
               <p className="cast__original-name">{c.name}</p>
             </div>
@@ -149,19 +147,37 @@ const TvShow = () => {
       <section className="official__videos">
         <h1>official videos</h1>
          {/*  Official Videos */}
-        <VideosOfficials endpoint={videos_endpoint} />
+        <VideosOfficials endpoint={`tv/${mediaId}/videos?language=fr-FR`} />
       </section>
       <section className="similar">
-        <Carrousel mediaType="tv" name="Similar" showBtn={false} endpoint={similar_endpoint} />
+        
+        <Carrousel 
+            mediaType="tv" 
+            name="Similar" 
+            showBtn={false} 
+            endpoint={`tv/${mediaId}/similar?language=fr-FR&adult=false`} 
+        />
+
       </section>
       <section className="recommended">
-        <Carrousel mediaType="tv" name="Recommendations" showBtn={false} endpoint={recommended_endpoint}/>
+        
+        <Carrousel 
+            mediaType="tv" 
+            name="Recommendations" 
+            showBtn={false} 
+            endpoint={`tv/${mediaId}/recommendations?language=fr-FR&adult=false`}
+        />
+
       </section>
     </section>
     :
     <section className="media-error-skeleton">
       <Skeleton />
-      <ErrorMessage message={movieError?.message} error={movieError} />
+
+      <ErrorMessage 
+        message={movieError?.message} 
+        error={movieError} 
+      />
     </section>
     )
   )

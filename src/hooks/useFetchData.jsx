@@ -1,13 +1,7 @@
 import {useState, useEffect} from "react"
 import {fetchData} from "../utils/api.js"
 
-const useFetchData = (endpoint, page=1) => {
-  const TMDB_TOKEN = import.meta.env.VITE_TMDB_TOKEN
-  const BASE_URL = "https://api.themoviedb.org/3/"
-
-  const tmdbHeader = new Headers({
-    'Authorization': 'Bearer ' + TMDB_TOKEN
-  })
+const useFetchData = (endpoint) => {
 
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
@@ -17,8 +11,8 @@ const useFetchData = (endpoint, page=1) => {
     let ignore = false
     const getData = async (endpoint) => {
       try {
-        //const data = await fetchData(endpoint)
-        const {data, error} = await fetchData(`${endpoint}`)
+
+        const {data, error} = await fetchData(endpoint)
 
         if(!ignore && data) {
           setData(data)
@@ -40,7 +34,7 @@ const useFetchData = (endpoint, page=1) => {
       ignore = true
     }
 
-  }, [endpoint, page])
+  }, [endpoint])
   
   return {data, loading, error};
 }

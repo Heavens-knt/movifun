@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import {fetchData, getImageUrl} from "../../utils/api"
 import { useParams } from "react-router-dom"
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage"
+import Loading from "../../components/Loading/Loading"
 
 const Search = () => {
   const {query} = useParams()
@@ -62,7 +63,7 @@ const Search = () => {
  
   return (
     <section className={styles.discover} style={{backgroundImage:`url("${getImageUrl()}")`}}>
-        { medias.length !== 0 && !error ? 
+        { medias.length !== 0 && !error && !loading ? 
             
           <section className={styles.slider}>
             { medias?.map(media => <Slide item={media} mediaId={media.id} key={media.id}/>) }
@@ -76,7 +77,7 @@ const Search = () => {
             <ErrorMessage message={error?.message}  error={error}/>
           </section>
         }
-      { medias.length !== 0 && <button onClick={() => setSearchPage(prev => ++prev)} style={{paddingInline:"1.5rem", paddingBlock:"0.5rem", fontSize:"20px", color:"white", backgroundColor:"#112", borderRadius:"12px", fontWeight:"bold", border:"none"}}>{loading ? "Loading ..." : "Load More"}</button>}
+      { medias.length !== 0 && loading ? <Loading /> : <button onClick={() => setSearchPage(prev => ++prev)} style={{paddingInline:"1.5rem", paddingBlock:"0.5rem", fontSize:"20px", color:"white", backgroundColor:"#112", borderRadius:"12px", fontWeight:"bold", border:"none"}}>Load More</button>}
     </section>
   )
 }

@@ -1,5 +1,6 @@
 import "./movie.css"
-import poster from "../../assets/backdrop.jpg"
+import noPoster from "../../assets/no-poster.png"
+import avatar from "../../assets/avatar.png"
 import Img from "../../components/lazyLoaderImage/Img"
 import Carrousel from "../../components/Carrousel/Carrousel"
 import { useFetchData } from "../../hooks/useFetchData"
@@ -7,7 +8,6 @@ import {useFetchMediaDetails} from "../../hooks/useFetchMediaDetails"
 import { getImageUrl } from "../../utils/api"
 import { useParams } from "react-router-dom"
 import { dateFormat, runtime } from "../../utils/dateFormat"
-import backdrop_img from "../../assets/backdrop.jpg"
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage"
 import VideosOfficials from "../../components/VideosOfficals/VideosOfficials"
 import { useEffect, useState } from "react"
@@ -46,16 +46,25 @@ const Movie = () => {
         <div className="image__container">
           
           <div className={`video-play ${showPop ? "show-pop" : ""}`}>
-            <ReactPlayer url={`https://www.youtube.com/watch?v=${videoId}`} controls />
+            <ReactPlayer
+                url={`https://www.youtube.com/watch?v=${videoId}`} 
+                controls
+            />
             <span 
                 onClick={() => {
                   setShowPop(false)
                   setVideoId(null)
                 }}
-              >Close</span>
+            >Close</span>
           </div>
 
-          <Img src={getImageUrl(movie?.poster_path) || poster} className="movie__poster" height="100%" width="100%" alt="poster"/>
+          <Img 
+              src={getImageUrl(movie?.poster_path) || noPoster} 
+              className="movie__poster" 
+              height="100%" 
+              width="100%" 
+              alt="poster"
+              />
           <span 
               className="watch-trailer"
               onClick={() => {
@@ -91,12 +100,12 @@ const Movie = () => {
         <div className="media__writer">
           <p>Writer: </p>
           <div>
-            {writers?.map(w => <span key={w.id}>{w.name}, </span>)}
+            {writers?.map((writer, index, tab) => <span key={writer.id}>{index === (tab.length - 1) ? `${writer.name}.` :  `${writer.name}, `} </span>)}
           </div>
         </div>
         <div className="media__director">
           <p>Director: </p>
-          <p>{director?.map(item => <span key={item.id}>{item.name}</span>)}</p>
+          <p>{director?.map((director, index, tab) => <span key={director.id}>{index === (tab.length - 1) ? `${director.name}.` : `${director.name}, `}</span>)}</p>
         </div>
         <div className="media__companies">
           <h1>Production Companies</h1>
@@ -115,7 +124,7 @@ const Movie = () => {
         <div className="media__countries">
           <h1>Production Countries</h1>
           <div className="countries">
-              {movie?.production_countries.map(country => <p>{country.name}</p>)}
+              {movie?.production_countries.map(country => <p key={country.name}>{country.name}</p>)}
           </div>
         </div>
       </section>
@@ -124,7 +133,7 @@ const Movie = () => {
         <section className="cast__corrousel slider">
           {cast?.map(c => (
             <div key={c.id} className="cast__card slide">
-              <Img className="cast__image" src={getImageUrl(c.profile_path) ||poster} height="150px" width="150px" alt="cast-image" />
+              <Img className="cast__image" src={getImageUrl(c.profile_path) || avatar} height="150px" width="150px" alt="cast-image" />
               <p className="cast__name">{c.character}</p>
               <p className="cast__original-name">{c.name}</p>
             </div>
@@ -144,10 +153,20 @@ const Movie = () => {
         </section>
       </section>*/}
       <section className="similar">
-        <Carrousel mediaType="movie" name="Similar" showBtn={false} endpoint={similar_endpoint} />
+        <Carrousel 
+            mediaType="movie" 
+            name="Similar" 
+            showBtn={false} 
+            endpoint={similar_endpoint} 
+          />
       </section>
       <section className="recommended">
-        <Carrousel mediaType="movie" name="Recommendations" showBtn={false} endpoint={recommended_endpoint} />
+        <Carrousel 
+            mediaType="movie"
+            name="Recommendations" 
+            showBtn={false} 
+            endpoint={recommended_endpoint} 
+          />
       </section>
     </section>
     :

@@ -3,15 +3,16 @@ import CircleRating from "../circleRating/CircleRating"
 import { getImageUrl } from "../../utils/api"
 import { Link } from 'react-router-dom'
 import { dateFormat } from "../../utils/dateFormat"
+import noPoster from "../../assets/no-poster.png"
 
 const Slide = ({item, mediaType, mediaId}) => {
   const isMovie = Object.getOwnPropertyDescriptor(item, "release_date")
 
-  const poster_url = getImageUrl(item?.poster_path) 
+  const poster_url = getImageUrl(item?.poster_path) || noPoster 
   const title = item?.title || item?.name
   const release_date = dateFormat(item?.release_date) || dateFormat(item?.first_air_date)
   return (
-    <Link to={`/${isMovie !== undefined ? "movie" : "tv"}/${mediaId}`} className="carrousel__slide" >
+    <Link to={`/${isMovie !== undefined ? "movie" : "tv"}/${mediaId}`} className="carrousel__slide" key={mediaId} >
       <div className="slide__image">
         <Img src={poster_url} height="220px" alt="poster-image" className="slide__image" />
         <CircleRating rating={ item?.vote_average === undefined ? "0.0" : item?.vote_average.toFixed(1)} />

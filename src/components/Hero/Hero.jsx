@@ -10,9 +10,7 @@ const Hero = ({hero}) => {
     const [overview, setOverview] = useState("")
     let [counter, setCounter] = useState(-1)
     const [isActive, setIsActive] = useState(false)
-    console.log(hero.overview, hero.overview.length, hero.release_date)
     const isMovie = Object.getOwnPropertyDescriptor(hero, "release_date")
-
 
     const gptWriting = (text, setCounter, setOverview) => {
            

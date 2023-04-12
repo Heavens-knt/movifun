@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import {fetchData, getImageUrl} from "../../utils/api"
 import { useParams } from "react-router-dom"
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage"
+import Loading from "../../components/Loading/Loading"
 
 const Discover = () => {
   const {mediaType, mediaKind} = useParams()
@@ -62,6 +63,7 @@ const Discover = () => {
     <section className={styles.discover} style={{backgroundImage:`url("${getImageUrl()}")`}}>
       <section className={styles.header} >
         <h1 className={styles.title}> {mediaType === "movie" ? "Films" : "Séries"} {mediaKind === "popular" ? "Populaires" : mediaType === "movie" ? "mieux notés" : "mieux notées" }</h1>
+
       </section>
         { medias.length !== 0 && !error ? 
             
@@ -77,7 +79,7 @@ const Discover = () => {
               <ErrorMessage message={error?.message} error={error}/>
             </section>
         }
-      { medias.length !== 0 && <button onClick={handleClick} style={{paddingInline:"1.5rem", paddingBlock:"0.5rem", fontSize:"20px", color:"white", backgroundColor:"#112", borderRadius:"12px", fontWeight:"bold", border:"none"}}>{loading ? "Loading ..." : "Load More"}</button>}
+      { medias.length !== 0 && loading ? <Loading /> : <button onClick={handleClick} style={{paddingInline:"1.5rem", paddingBlock:"0.5rem", fontSize:"20px", color:"white", backgroundColor:"#112", borderRadius:"12px", fontWeight:"bold", border:"none"}}>Load More</button>}
     </section>
   )
 }

@@ -1,5 +1,5 @@
 import "../movieDetails/movie.css"
-import poster from "../../assets/backdrop.jpg"
+import noPoster from "../../assets/no-poster.png"
 import Img from "../../components/lazyLoaderImage/Img"
 import { useFetchData } from "../../hooks/useFetchData"
 import { getImageUrl } from "../../utils/api"
@@ -33,7 +33,7 @@ const Season = () => {
   }
 
   return (
-    season.length !== 0 && !error ?
+    season.length !== 0 && !error && !loading ?
     <section className="media" style={{backgroundImage: `url("${getImageUrl(season?.poster_path)}")`}}>
       <section className="media__header">
         <div className="image__container"> 
@@ -46,7 +46,7 @@ const Season = () => {
                 }}
               >Close</span>
           </div>
-          <Img src={getImageUrl(season?.poster_path) || poster} className="movie__poster" height="100%" width="100%" alt="poser"/>
+          <Img src={getImageUrl(season?.poster_path) || noPoster} className="movie__poster" height="100%" width="100%" alt="poser"/>
           <span 
               className="watch-trailer"
               onClick={() => {
@@ -72,12 +72,12 @@ const Season = () => {
         <div className="media__writer">
           <p>Writer: </p>
           <div>
-            {writers?.map(w => <span key={w.id}>{w.name}, </span>)}
+            {writers?.map((writer, index, tab) => <span key={writer.id}>{index === (tab.length - 1) ? `${writer.name}.` : `${writer.name}, `}</span>)}
           </div>
         </div>
         <div className="media__director">
           <p>Director: </p>
-          <p>{director?.map(item => <span key={item.id}>{item.name}</span>)}</p>
+          <p>{director?.map((director, index, tab) => <span key={director.id}>{index === (tab.length - 1) ? `${director.name}.` : `${director.name}`}</span>)}</p>
         </div>
         <div className="seasons__total episode__total">
           <section className="right">

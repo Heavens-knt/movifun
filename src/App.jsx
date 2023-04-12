@@ -11,6 +11,7 @@ import Season from './pages/seasonDetails/Season'
 import TvShow from './pages/tvDetails/TvShow'
 import Search from './pages/Search/Search'
 import NotFound from "./components/NotFound/NotFound"
+import Explore from './pages/Explore/Explore'
 
 function App() {
   const [navOpen, setNavOpen] = useState(false)
@@ -36,6 +37,7 @@ function App() {
         <Route path='/tv/:mediaId/season/:season_number' element={<Season />} />
         <Route path='/discover/:mediaType/:mediaKind' element={<Discover />} />
         <Route path='/search/:query' element={<Search />} />
+        <Route path='/explore' element={<Explore />}/>
         <Route path='*' element={<NotFound />}/>
       </Routes>
     </BrowserRouter>
